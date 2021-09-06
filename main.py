@@ -27,13 +27,15 @@ def scrape(cap_num):
         for row in reader:
             proxylist.append(row[0])
 
-    proxy = random.choice(proxylist)
     scraped_num = 0
     while cap_num > scraped_num:
         try:
             slug = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
             url = "https://prnt.sc/" + slug
-            response = requests.get(url, proxies={'https': "socks4://" + proxy,'http': "socks4://" + proxy}, headers=headers, timeout=1)
+            try:
+                response = requests.get(url, proxies={'https': "socks4://" + random.choice(proxylist),'http': "socks4://" + random.choice(proxylist)}, headers=headers, timeout=0.5)
+            except:
+                pass
             content = response.content.decode()
             soup = BeautifulSoup(content, features='lxml')
             ufr = requests.get(soup.img['src'], headers=headers)
