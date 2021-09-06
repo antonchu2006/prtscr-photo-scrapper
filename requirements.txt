@@ -1,0 +1,5 @@
+requests
+python-csv
+pysocks
+beautifulsoup4
+lxml
